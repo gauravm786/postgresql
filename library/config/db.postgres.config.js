@@ -1,3 +1,5 @@
+//9 May
+
 //for congifuration for db(this configuration can be given for  postgres,mongodb,mysql and for different types of db) 
 //as my node application require different types of db,if we include configuration of different types of db inside index.js it will create confusion 
 //to avoid confusion we are creating new folder named confing and inside that folder we will create db.postgres.config.js folder

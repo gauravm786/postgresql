@@ -1,3 +1,4 @@
+//9 May
 
 //I need to configure all my dbconfig and model/schema with sequelize      
 
@@ -7,7 +8,7 @@ import Sequelize from 'sequelize';
 import tutorial from './tutorial.model'
 
 //first of all we did integration for our database configuration with the sequelize which is done here
-/* 
+
 const sequelize = new Sequelize  //this is the requirement of aour sequelize to get started
 (pgconfig.DB, pgconfig.USER, pgconfig.PASSWORD,//here pgconfig.DB, pgconfig.USER, pgconfig.PASSWORD are different parameter which it should required
 {    
@@ -22,7 +23,7 @@ const sequelize = new Sequelize  //this is the requirement of aour sequelize to 
         idle:pgconfig.pool.idle
     }
 })
-*/
+
 
 //we are including schema with sequelize which is done here 
 const db={}
