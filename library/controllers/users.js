@@ -311,7 +311,7 @@ export const updateUserById=(req,res)=> //patch is basically used to update a pa
 
 //11 April
 
-/*
+
 //using aggregate function
 
 //for using this schema we need to import it,for importing it we can simply use import statement
@@ -505,4 +505,3 @@ const getUsersByAge=(req,res)=>
         }
     )
 }    
-*/

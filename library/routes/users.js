@@ -1,6 +1,6 @@
 //3,4,10,11 April
 
-/*
+
 //here we are creating routes for users endpoint
 
 import express from "express"
@@ -26,4 +26,4 @@ router.patch("/:id",updateUserById) //patch is basically used to update a partic
 //http://localhost:7777/user?name=gaurav&gender=male&age=22&city=Mumbai
 //here name,gender,age,city are query
 
-export default router //router is exported to index.js*/
+export default router //router is exported to index.js

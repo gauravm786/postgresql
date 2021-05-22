@@ -1,6 +1,6 @@
 //9 May
 
-import db from '../model'  //if you write file(instead or in place of model),in that file whatever export you have done that will get assigned to db alias 
+import db from '../model/index.js'  //if you write file(instead or in place of model),in that file whatever export you have done that will get assigned to db alias 
 const Tutorials = db.tutorials;//if you write folder(istead or in place of model),then it will directly go for index.js file,if ou want to make folder as a module which can be imported later in that case we must have index.js file inside that folder,in index.js file whatever thing you have exportedl,that is exported thing will be be assigned to db.whatever things we have exported in index.jsfile that will be assigned to db.
 const Op=db.sequelize.Op;       //op is nothing but sequelize op
 
@@ -24,6 +24,7 @@ export const getAllTutorialsByTitle = (req,res)=>//getAllTutorials is given by T
             })//if err.message is empty then "some error occured while retrieving tutorials" will be printed using OR operator
     })    
 };
+
 
 //string literals:-
 //in general we use "Hello"+var+"2021" here var=world

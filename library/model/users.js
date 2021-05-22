@@ -1,6 +1,6 @@
 //3,4,10,11 April
 
-/*
+
 //after making router and controller we create model
 //every record which will be stored inside the document that will be in the form of schema,schema is nothing but definition how it should look like
 //for creating schema need to import mongoose
@@ -42,4 +42,3 @@ export const User=mongoose.model('User',userSchema)                     //this i
 //and that model must have some schema,it must have some rule defined to it that how it should look like 
 //so for creating model into a database,we basically require to pass the schema mongoose.model
 //here User variable is used to create differen user model object in later coding and thats why it is exported out
-*/
