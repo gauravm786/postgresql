@@ -47,3 +47,24 @@ const pgconfig =
 }
 export default pgconfig
 */
+
+//16 may
+
+const pgconfig =
+{
+    HOST:"localhost",   //host will be localhost
+    PORT:'1234',
+    USER:"postgres",    //user for my database is postgres
+    PASSWORD:"gaurav786",
+    DB:"tuts",           //DB means database name
+    dialect:"postgres",  //the sequelize with the help of dailect will understand that a user or developer wants to use postgres as a database configuration
+    pool:
+    {
+        max:5, //it means sequelize will have 5 different connection to the database
+        min:0, //i there is no operation in the  database we can flush off all the connection and thats why min is used
+        acquire:30000,
+        idle:10000
+    }
+}
+export default pgconfig
+

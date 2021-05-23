@@ -53,3 +53,28 @@ const tutorial=(sequelize,Sequelize)=>
 }                          
 export default tutorial
 */
+
+//16 may
+
+const tutorial=(sequelize,Sequelize)=>
+{
+   const Tutorial = sequelize.define
+   ("tutorial",                        //defining tutorial
+   {                                   //table name is tutorial
+      title:                           //title,description and published are column
+      {
+         type:Sequelize.STRING
+      },
+      description:
+      {
+         type:Sequelize.STRING
+      },
+      published:
+      {
+         type:Sequelize.STRING
+      }
+   },
+   { timestamps:false}) //to avoid "message": "column \"createdAt\" does not exist" we use timestamps,we get [] on postman 
+   return Tutorial;
+}                          
+export default tutorial

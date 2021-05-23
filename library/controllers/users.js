@@ -311,7 +311,7 @@ export const updateUserById=(req,res)=> //patch is basically used to update a pa
 
 //11 April
 
-
+/*
 //using aggregate function
 
 //for using this schema we need to import it,for importing it we can simply use import statement
@@ -393,6 +393,210 @@ user.save()//save() makes sure that data is stored inside the database
     )
     
 }
+
+export const getUserById=(req,res)=>
+{
+    console.log("In function call getUserById.. I this /users endpoint got hit.")
+    //res.send(users)
+    User.findById(req.params.id) 
+    //User.findById returns promise because (req.param.id) function is executed asnynchronously
+    //by behaviour of promise it is fixed that it has two function .then() and .catch()
+    //so in future if promise has response or result then .then() function is executed
+    //if promise has error then .catch() function is executed
+    .then
+    (
+        (result)=>
+        {
+            res.send(result)
+        }
+    )
+    .catch
+    (
+        (err)=>
+        {
+            console.log(err)
+
+        }
+    )
+}
+
+
+export const deleteUserById=(req,res)=>
+{
+    console.log("In function call deleteUserById.. I this /users endpoint got hit.")
+    //res.send(users)
+    User.findByIdAndDelete(req.params.id) //for passing user id,req.param.id is used
+    .then
+    (
+        (result)=>
+        {
+            res.send(result)
+        }
+    )
+    .catch
+    (
+        (err)=>
+        {
+            console.log(err)
+
+        }
+    )
+}
+
+
+export const updateUserById=(req,res)=> //patch is basically used to update a particular entry and update is use to update the entire entry
+{
+    console.log("In function call updateUserById.. I this /users endpoint got hit.")
+    //res.send(users)
+    User.findByIdAndUpdate
+    (req.params.id, 
+    {name:req.body.name,
+    gender:req.body.gender,
+    age:req.body.age,
+    city:req.body.city
+
+    }) 
+    .then
+    (
+        (result)=>
+        {
+            res.send(result)
+        }
+    )
+    .catch
+    (
+        (err)=>
+        {
+            console.log(err)
+
+        }
+    )
+}
+
+//aggregate function:-
+    //aggregate is used to get particular data of users from the database based on the given key:value
+    //for e.g:-to get users of age 50 from database,we use aggregate function using http://localhost:7777/user?age=50 on postman   
+    //syntax for aggregate:-functionname.aggregate[{$(opearion:{key:value})}]
+//firstly  create getUsersByAge API without using PORT and then add it inside getUser API
+const getUsersByAge=(req,res)=>
+{
+    console.log("In function call getUserByAge().. I this /users endpoint got hit.")
+    User.aggregate                
+    //aggregate is used to get particular users from the database based on the given value
+    //for e.g:-to get users of age 50 from database,we use aggregate function    
+    //syntax for aggregate:-functionname.aggregate[{$(opearion:{key:value})}]
+    (
+        [{$match:{"age":"50"}}] //it will filter out users whose age is 50
+    )
+
+    .then
+    (
+        (result)=>
+        {
+            res.send(result)
+        }
+    )
+    .catch
+    (
+        (err)=>
+        {
+            console.log(err)
+
+        }
+    )
+}    
+*/
+
+//16 may
+
+import {User} from '../model/users.js'
+
+//in controllers we define functions
+
+let users=[]
+
+export const getUsers=(req,res)=>
+{
+    console.log("Hi")
+    console.log(req.query) //for getting filtered data query is used
+    if(req.query.age) //for passing user age as query,req.query.age is used
+    {
+        getUsersByAge(req,res)//add getUsersByAge API inside getUser API as aggregate function is used inside getUserByAge API
+    }
+    else
+    {
+        console.log("In function call getUser().. I this /users endpoint got hit.")
+        User.find() 
+        .then 
+        (
+            (result)=>
+            {
+                res.send(result)
+            }
+        )
+        .catch
+        (
+            (err)=>
+            {
+                console.log(err)
+    
+            }
+        ) 
+    }
+}    
+//output:-//here req.query will give filtered output from given data inside terminal
+//use http://localhost:7777/user?name=gaurav&age=22 on webpage and you will get filtered data on terminal
+//Hi
+//{ name: 'gaurav', age: '22' }
+//In function call getUser().. I this /users endpoint got hit.
+
+export const createUser=(req,res)=>        //createUser is used for creating new user
+{
+    console.log("In function call createUser() .. I this /users endpoint got hit.")
+    //res.send("ok")
+    //user.push(req.body) //after creating model comment this out
+
+    //we need to create object out of model and storing it for that i need to create it first
+    //we must create model out of it 
+
+    if(req.body.name==null || req.body.gender==null || req.body.age==null || req.body.city==null )
+    res.status(400)
+            ({
+                message: err || "all fields are not been passed..try again"
+            })
+
+    const user=new User //this Uaer is from model
+    (
+        {
+            name:req.body.name,
+            gender:req.body.gender,
+            age:req.body.age,
+            city:req.body.city,
+        }
+    )
+
+user.save()//save() makes sure that data is stored inside the database
+    .then                            //if code is successful or no error then .then method is used             
+    (
+        (result)=>                   
+        {
+            res.send(result)
+        }
+    )
+    .catch          //if code is not successful or there is error then .catch method is used
+    (
+        (err)=>
+        {
+            res.status(500).send
+            ({
+                message: err || "Internal DB error"
+            })
+
+        }
+    )
+    
+}
+
 
 export const getUserById=(req,res)=>
 {
