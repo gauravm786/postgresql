@@ -313,15 +313,31 @@ server.get("/",homepage)
 
 //16 may
 
-
+/*
 import express  from "express"        
 import bodyparser from "body-parser"
 import userRouter from "./routes/users.js"
 import tutorialRouter from "./routes/tutorials.js"
 import mongoose from "mongoose"
-import pgdb from './model/index.js';
-pgdb.sequelize.sync()
-
+//import pgdb from './model/index.js'; //before
+//pgdb.sequelize.sync() //sync means synchronize,it means at two particular places we synchronize the data,if table is not there in db or that model or schema is not there in db then sync() behaviour will makes sure it is there,if not then it will create for you
+import pgdb from './model/index.js';      //synchronize can lead to sequelizedatabaseerror //here force is keyword and its value is true
+//sequelizedatabaseerror will occur while using post request and to avoid it we use force,it automaticaaly delete previous record and stores new record in the table,sequelizedatabaseerror means data is already is existing in the table
+pgdb.sequelize.sync({force:true})  //using force:true method will help us to create  createdAt,updatedAt with timestamp on pgadmin and sync() function will gives you promise .then and .catch()
+.then
+((result)=>
+{
+    console.log("++++++++++++")
+    console.log(result)
+    console.log("++++++++++++")
+})
+.catch
+((err)=>
+{
+    console.log("@@@@@@@@@@@@")
+    console.log(err)
+    console.log("@@@@@@@@@@@@")
+})
 
 const dbURL='mongodb+srv://gaurav4:gaurav786@cluster0.b4muw.mongodb.net/library?retryWrites=true&w=majority'
 mongoose.connect(dbURL,{useNewUrlParser:true,useUnifiedTopology:true})
@@ -351,3 +367,4 @@ var homepage=(req,res)=>res.send("Welcome to my library") //handle http://localh
 server.use("/user",userRouter) 
 server.use("/tutorial",tutorialRouter)
 server.get("/",homepage)
+*/

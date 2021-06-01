@@ -50,6 +50,7 @@ export default pgconfig
 
 //16 may
 
+/*
 const pgconfig =
 {
     HOST:"localhost",   //host will be localhost
@@ -67,4 +68,4 @@ const pgconfig =
     }
 }
 export default pgconfig
-
+*/

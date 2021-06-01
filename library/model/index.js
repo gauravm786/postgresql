@@ -89,6 +89,7 @@ export default db //we will be using this particular database(db) to have multip
 
 //16 may
 
+/*
 import pgconfig from '../config/db.postgres.config.js'
 import Sequelize from 'sequelize';
 import tutorial from './tutorial.model.js';
@@ -127,4 +128,4 @@ export default db //we will be using this particular database(db) to have multip
 //this is one time configuration required for our application 
 //we can include multiple attribute with .(dot) operator with the object
 //db as object have sequelize,Sequelize and tutorial attributes,db is not empty
-
+*/

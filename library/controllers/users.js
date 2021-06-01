@@ -509,6 +509,7 @@ const getUsersByAge=(req,res)=>
 
 //16 may
 
+/*
 import {User} from '../model/users.js'
 
 //in controllers we define functions
@@ -559,10 +560,10 @@ export const createUser=(req,res)=>        //createUser is used for creating new
     //we need to create object out of model and storing it for that i need to create it first
     //we must create model out of it 
 
-    if(req.body.name==null || req.body.gender==null || req.body.age==null || req.body.city==null )
-    res.status(400)
+  if(req.body.name==null || req.body.gender==null || req.body.age==null || req.body.city==null )//to check if(param==null) if null then execution goes to res.status(400) and  message: err || "all fields are not been passed..try again" will be printed
+    res.status(400)                                                                             //if not null then program is running properly
             ({
-                message: err || "all fields are not been passed..try again"
+                message: "all fields are not been passed..try again"
             })
 
     const user=new User //this Uaer is from model
@@ -574,7 +575,7 @@ export const createUser=(req,res)=>        //createUser is used for creating new
             city:req.body.city,
         }
     )
-
+//all the data will go in JSON format and the data will convert from json to object and object to json
 user.save()//save() makes sure that data is stored inside the database
     .then                            //if code is successful or no error then .then method is used             
     (
@@ -587,11 +588,12 @@ user.save()//save() makes sure that data is stored inside the database
     (
         (err)=>
         {
-            res.status(500).send
+            res.status(500).send //sending response back where status code is 500 which shows internal error or DB error 
+                                 //and after that we send actual data which is in JSON format and that JSON data contain following message
             ({
                 message: err || "Internal DB error"
             })
-
+//if there value in err then err is assigned to message or if there is no value in err then "Internal DB error" is assigned to message
         }
     )
     
@@ -709,3 +711,4 @@ const getUsersByAge=(req,res)=>
         }
     )
 }    
+*/

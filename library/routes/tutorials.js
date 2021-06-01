@@ -44,13 +44,14 @@ export default router
 
 //16 may
 
+/*
 //creating new router for postgresql
 
 import express from "express"
-//while runnung the application node will try to include code of express to your code  
+//while running the application node will try to include code of express to your code  
 //we need to use express for router
 
-import {getAllTutorialsByTitle,createTutorial} from '../controllers/tutorial.js'
+import {getAllTutorialsByTitle,createTutorial,deleteTutorialById,updateTutorialById,deleteTutorials} from '../controllers/tutorial.js'
 //to import multiple functions at same time we use import{}
 // and using '../controllers/users.js' we go back to previous folder and import function from the given folder.Here it is controller
 
@@ -60,5 +61,8 @@ const router = express.Router();
 
 router.get("/",getAllTutorialsByTitle)
 router.post("/",createTutorial)
+router.delete("/",deleteTutorials)
+router.delete("/:id",deleteTutorialById)
+router.put("/:id",updateTutorialById)
 export default router
-
+*/
