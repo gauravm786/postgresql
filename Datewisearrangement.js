@@ -850,7 +850,7 @@ export default role
 
 //model.index.js
 
-
+/*
 //to install body-parser cors jsonwebtoken bcryptjs use
 //npm install body-parser cors jsonwebtoken bcryptjs --save
 
@@ -927,11 +927,13 @@ export default db
 //through:"user_roles" means user_roles table will be created and userId and roleId column will be created 
 //otherkey is just key of another table
 //db.roles is for mapping and it is used for db connection which acess user 
+*/
+
 
 //library>index.js
 
 
-
+/*
 //to install body-parser cors jsonwebtoken bcryptjs use
 //npm install body-parser cors jsonwebtoken bcryptjs --save
 
@@ -1020,20 +1022,20 @@ var homepage=(req,res)=>res.send("Welcome to my library") //handle http://localh
 //server.use("/user",userRouter) 
 server.use("/tutorial",tutorialRouter)
 server.get("/",homepage)
-
+*/
 
 //config>auth.config.js
 
-
+/*
 export default secret = "mern-stack-development"       
 //after creating Role table and rows in index.js 
 //create auth.config.js file inside config folder
 //secret is a keyword and mern-stack-development is a secret name and now it is exported using export default and this key will be used in middleware function
-
+*/
 
 //middleware>verifysignup.js
 
-
+/*
 import pgdb from './model/index.js';
 const ROLES =pgdb.ROLES                    //created ROLES and User using const and pgdb.ROLES and pgdb.User is imported from index.js 
 const User =pgdb.User
@@ -1101,6 +1103,7 @@ export default verifysignup =
     checkDuplicateUsernameOrEmail : checkDuplicateUsernameOrEmail,
     checkRolesExisted : checkRolesExisted
 } 
+*/
 
 //rest all the files and folders will remain same
 
