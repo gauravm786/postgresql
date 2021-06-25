@@ -190,6 +190,7 @@ export const getAllTutorialsByTitle = (req,res)=>//getAllTutorials is given by T
 //ternary operator is the condition passed for where clause
 //where clause sees that if given title is matched if it is similar to the title i have it will throw out otherwise null is thrown out  
 */
+//9 May end
 
 //15 may
  
@@ -384,11 +385,11 @@ router.get("/",getAllTutorialsByTitle)
 
 export default router
 */
+//15 May end
 
 //16 May
 
 //library>index.js
-
 
 /*
 import express  from "express"        
@@ -812,3 +813,295 @@ router.delete("/:id",deleteTutorialById)
 router.put("/:id",updateTutorialById)
 export default router
 */
+//16 May end
+
+
+//30 May
+
+//role.model.js
+
+/*
+//creating schema or model for role
+
+const role=(sequelize,Sequelize)=>
+{
+   const Role = sequelize.define
+   ("role",                            
+   {                                  
+      id:                           
+      {
+         type:Sequelize.STRING,
+         primaryKey: true
+      },
+      name:
+      {
+         type:Sequelize.STRING
+      },
+    },
+    {
+        timestamps:true
+    }
+    )
+   return Role;
+}                          
+export default role
+*/
+
+
+//model.index.js
+
+
+//to install body-parser cors jsonwebtoken bcryptjs use
+//npm install body-parser cors jsonwebtoken bcryptjs --save
+
+import pgconfig from '../config/db.postgres.config.js'
+import Sequelize from 'sequelize';
+import tutorial from './tutorial.model.js';
+import user from './user.model.js'      //after creating role.model.js now import user and role
+import role from './role.model.js'
+console.log(pgconfig) 
+
+
+const sequelize = new Sequelize  
+(pgconfig.DB, pgconfig.USER, pgconfig.PASSWORD,
+{    
+    host: pgconfig.host,       
+    dialect: pgconfig.dialect,
+    port:pgconfig.PORT,
+    operatorsAliases : false,
+    pool:
+    {
+        max:pgconfig.pool.max,
+        min:pgconfig.pool.min,
+        acquire:pgconfig.pool.acquire,
+        idle:pgconfig.pool.idle
+    }
+});
+
+
+const db=
+{
+sequelize:sequelize,
+Sequelize:Sequelize,
+
+tutorials:tutorial(sequelize,Sequelize), //create users and roles table using (sequelize,Sequelize)  and it will be created on db tuts on pgadmin
+users:user(sequelize,Sequelize),         //here user and role are imported from role.model.js and user.model.js
+roles:role(sequelize,Sequelize) 
+}
+
+//now we will include ORM relationship or relation between two table like one to many type
+//belongsToMany is a keyword
+//db.roles.belongsToMany(db.users,{}) this is a basic format of using ORM 
+//db.roles.belongsToMany(db.users,{}) //inside this {} through,foreignkey and otherkey keyword are used
+//db.users.belongsToMany(db.roles,{}) //inside this {} through,foreignkey and otherkey keyword are used
+//here,
+//db means database
+//roles and users are table
+//db.roles and db.users are roles and users table in the database
+//db.roles.belongsToMany means that belongsToMany keyword is used for users and roles table
+//foreign key is used to take reference from primary key,foreign key is also called as referencing and primary key is called as referenced
+//primary key means values inside primary key cannot be repeated and kept blank as primary key contains uique values
+//for making connection between primary key and foreign key same datatype should be used
+
+db.roles.belongsToMany(db.users,{ //here db.roles belongs to db.users and db.users is object
+        through:"user_roles",     //through keyword is used to connect two tables here user_roles - Join table between user and role.i.e roles(1)--->user(M)  one to many relationship   
+        foreignKey:"roleId",      //roleId is a foreignkey as it will take reference from userId    
+        otherKey:"userId"         //UserId is an otherkey and it is inside users table
+})
+
+
+db.users.belongsToMany(db.roles,{   //here db.users belongs to db.roles and db.roles is object
+        through:"user_roles",       //through keyword is used to connect two tables here user_roles - Join table between user and role.i.e user(1)--->roles(M) one to many relationship
+        foreignKey:"userId",        //roleId is a foreign key as it will take reference from userId    
+        otherKey:"roleId"           //roleId is an otherkey and it is inside roles table
+})
+
+db.ROLES=["user","admin","moderator"] //ROLES is a constraint which db will be using and here user,admin,moderator are the roles to be performed
+//User can perform admin,moderator and normal user also
+
+export default db
+
+//here,
+//through:"user_roles" means user_roles table will be created and roleId and userId column will be created
+
+//through:"user_roles" means user_roles table will be created and userId and roleId column will be created 
+//otherkey is just key of another table
+//db.roles is for mapping and it is used for db connection which acess user 
+
+//library>index.js
+
+
+
+//to install body-parser cors jsonwebtoken bcryptjs use
+//npm install body-parser cors jsonwebtoken bcryptjs --save
+
+import express  from "express"        
+import bodyparser from "body-parser"
+import userRouter from "./routes/users.js"
+import tutorialRouter from "./routes/tutorials.js"
+import mongoose from "mongoose"
+import pgdb from './model/index.js';
+import cors from 'cors';
+
+var corsOptions = //to use cors define corsoptions
+{
+    origin:"http://localhost:7777" //including link using origin
+} //we  will be using corsoptions inside our application
+
+const Role = pgdb.roles;    //here we create rows inside the table
+function initializeDB()     //in index.js roles is imorted from const db in role.model.js
+{                           //initializeDB is used to initialize database
+    Role.create             //create is used for post request and it will create rows inside the table
+    ({                      //It is the job of database initializer to create the database and required tables based on the data model classes you create.
+        id:1,               //it will create rows named user,admin,moderator
+        name:"user"
+       
+    })
+
+    Role.create
+    ({
+        id:2,
+        name:"admin"
+    })
+
+    Role.create
+    ({
+        id:3,
+        name:"moderator"
+    })
+}
+
+pgdb.sequelize.sync({force:true})  
+.then
+(
+  ()=>
+  { 
+    initializeDB();           //here initializeDB() is called
+   // console.log("++++++++++++")
+    //console.log(result)
+    //console.log("++++++++++++")
+  }
+)
+.catch
+((err)=>
+{
+    console.log("@@@@@@@@@@@@")
+    console.log(err)
+    console.log("@@@@@@@@@@@@")
+})
+
+const dbURL='mongodb+srv://gaurav4:gaurav786@cluster0.b4muw.mongodb.net/library?retryWrites=true&w=majority'
+mongoose.connect(dbURL,{useNewUrlParser:true,useUnifiedTopology:true})
+.then                                    
+(                               
+    (result)=>
+    {
+        console.log("connected to the Database")
+        console.log("server started successfully")
+        server.listen(PORT) 
+    }
+)
+.catch  
+(
+    (err)=>
+    {
+        console.log(err)
+    }
+)
+
+const server = express()
+const PORT=7777
+server.use(cors(corsOptions)); //server is used by cors and inside cors use corsoptions //here we make server to use corsoptions
+
+server.use(bodyparser.json())
+
+var homepage=(req,res)=>res.send("Welcome to my library") //handle http://localhost:7777
+
+//server.use("/user",userRouter) 
+server.use("/tutorial",tutorialRouter)
+server.get("/",homepage)
+
+
+//config>auth.config.js
+
+
+export default secret = "mern-stack-development"       
+//after creating Role table and rows in index.js 
+//create auth.config.js file inside config folder
+//secret is a keyword and mern-stack-development is a secret name and now it is exported using export default and this key will be used in middleware function
+
+
+//middleware>verifysignup.js
+
+
+import pgdb from './model/index.js';
+const ROLES =pgdb.ROLES                    //created ROLES and User using const and pgdb.ROLES and pgdb.User is imported from index.js 
+const User =pgdb.User
+
+
+checkDuplicateUsernameOrEmail = (req, res, next)=>     //here username is checked and if it is  failed then further process going to email will be stopped
+{   //check username or verify username                           
+    User.findOne({                  //to find data from the table findOne function is used
+        where:{ username:req.body.username }
+    })
+    .then(
+        user =>
+        {
+            if(user)
+            {
+                req.status(400).send({
+                    message:"Failed! Username already exist"
+                })
+                return;
+            }
+            //check email  or verify email
+            User.findOne({
+                where:{ username:req.body.username }
+            })
+            .then(
+                user =>{
+                    if(user)
+            {
+                req.status(400).send({
+                    message:"Failed! Username already exist"
+                })
+                return;
+            }
+            next();
+                }
+            )
+          
+        }    
+    )    
+}    
+
+                
+            
+        
+checkRolesExisted = ()=>       //here we check whether  roles exist or not
+{
+    if(req.body.roles){
+        for(let i=0;i<req.body.roles.length;i++)
+        {
+            if(!ROLES.includes(req.body.roles[i]))     
+            //here if(!ROLES.includes(req.body.roles[i])) is same as if(!ROLES.includes(req.body.roles[i])==false)  both are same   
+             // if requested roles is not existed in ROLES  and then we send error message(Failed! Roles does not exist) and for ! mark is used before Role
+            {                                
+                res.status(400).send({
+                    message:"Failed! Roles does not exist" + req.body.roles[i]
+                })
+                return;
+            }
+        }
+    }
+    next();
+}
+export default verifysignup = 
+{
+    checkDuplicateUsernameOrEmail : checkDuplicateUsernameOrEmail,
+    checkRolesExisted : checkRolesExisted
+} 
+
+//rest all the files and folders will remain same
+
+//30 May 2021 end

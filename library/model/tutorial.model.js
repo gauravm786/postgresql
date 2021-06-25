@@ -81,3 +81,31 @@ const tutorial=(sequelize,Sequelize)=>
 }                          
 export default tutorial
 */
+
+
+//30 may
+
+
+const tutorial=(sequelize,Sequelize)=>
+{
+   const Tutorial = sequelize.define
+   ("tutorial",                        //defining tutorial
+   {                                   //table name is tutorial
+      title:                           //title,description and published are column
+      {
+         type:Sequelize.STRING
+      },
+      description:
+      {
+         type:Sequelize.STRING
+      },
+      published:
+      {
+         type:Sequelize.STRING
+      }
+   },
+   //{timestamps:false}
+   { timestamps:true}) //to avoid "message": "column \"createdAt\" does not exist" we use timestamps:false,we get [] on postman and use timestamps:true while using force method
+   return Tutorial;
+}                          
+export default tutorial

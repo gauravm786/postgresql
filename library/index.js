@@ -368,3 +368,186 @@ server.use("/user",userRouter)
 server.use("/tutorial",tutorialRouter)
 server.get("/",homepage)
 */
+
+//30 may
+
+//to install body-parser cors jsonwebtoken bcryptjs use
+//npm install body-parser cors jsonwebtoken bcryptjs --save
+
+/*
+import express  from "express"        
+import bodyparser from "body-parser"
+import userRouter from "./routes/users.js"
+import tutorialRouter from "./routes/tutorials.js"
+import mongoose from "mongoose"
+import pgdb from './model/index.js';
+import cors from 'cors';
+
+var corsOptions = //to use cors define corsoptions
+{
+    origin:"http://localhost:7777" //including link using origin
+} //we  will be using corsoptions inside our application
+
+const Role = pgdb.roles;    //here we create rows inside the table
+function initializeDB()     //in index.js roles is imorted from const db in role.model.js
+{                           //initializeDB is used to initialize database
+    Role.create             //create is used for post request and it will create rows inside the table
+    ({                      //It is the job of database initializer to create the database and required tables based on the data model classes you create.
+        id:1,               //it will create rows named user,admin,moderator
+        name:"user"
+       
+    })
+
+    Role.create
+    ({
+        id:2,
+        name:"admin"
+    })
+
+    Role.create
+    ({
+        id:3,
+        name:"moderator"
+    })
+}
+
+pgdb.sequelize.sync({force:true})  
+.then
+(
+  ()=>
+  { 
+    initializeDB();           //here initializeDB() is called
+   // console.log("++++++++++++")
+    //console.log(result)
+    //console.log("++++++++++++")
+  }
+)
+.catch
+((err)=>
+{
+    console.log("@@@@@@@@@@@@")
+    console.log(err)
+    console.log("@@@@@@@@@@@@")
+})
+
+const dbURL='mongodb+srv://gaurav4:gaurav786@cluster0.b4muw.mongodb.net/library?retryWrites=true&w=majority'
+mongoose.connect(dbURL,{useNewUrlParser:true,useUnifiedTopology:true})
+.then                                    
+(                               
+    (result)=>
+    {
+        console.log("connected to the Database")
+        console.log("server started successfully")
+        server.listen(PORT) 
+    }
+)
+.catch  
+(
+    (err)=>
+    {
+        console.log(err)
+    }
+)
+
+const server = express()
+const PORT=7777
+server.use(cors(corsOptions)); //server is used by cors and inside cors use corsoptions //here we make server to use corsoptions
+
+server.use(bodyparser.json())
+
+var homepage=(req,res)=>res.send("Welcome to my library") //handle http://localhost:7777
+
+//server.use("/user",userRouter) 
+server.use("/tutorial",tutorialRouter)
+server.get("/",homepage)
+*/
+
+//5 june 2021
+
+import express  from "express"        
+import bodyparser from "body-parser"
+import userRouter from "./routes/users.js"
+import tutorialRouter from "./routes/tutorials.js"
+import mongoose from "mongoose"
+import pgdb from './model/index.js';
+import cors from 'cors';
+import {authenticate} from './routes/auth.routes.js'
+
+var corsOptions = //to use cors define corsoptions
+{
+    origin:"http://localhost:7777" //including link using origin
+} //we  will be using corsoptions inside our application
+
+const Role = pgdb.roles;    //here we create rows inside the table
+function initializeDB()     //in index.js roles is imorted from const db in role.model.js
+{                           //initializeDB is used to initialize database
+    Role.create             //create is used for post request and it will create rows inside the table
+    ({                      //It is the job of database initializer to create the database and required tables based on the data model classes you create.
+        id:1,               //it will create rows named user,admin,moderator
+        name:"user"
+       
+    })
+
+    Role.create
+    ({
+        id:2,
+        name:"admin"
+    })
+
+    Role.create
+    ({
+        id:3,
+        name:"moderator"
+    })
+}
+
+pgdb.sequelize.sync({force:true})  
+.then
+(
+  ()=>
+  { 
+    initializeDB();           //here initializeDB() is called
+   // console.log("++++++++++++")
+    //console.log(result)
+    //console.log("++++++++++++")
+  }
+)
+.catch
+((err)=>
+{
+    console.log("@@@@@@@@@@@@")
+    console.log(err)
+    console.log("@@@@@@@@@@@@")
+})
+
+const dbURL='mongodb+srv://gaurav4:gaurav786@cluster0.b4muw.mongodb.net/library?retryWrites=true&w=majority'
+mongoose.connect(dbURL,{useNewUrlParser:true,useUnifiedTopology:true})
+.then                                    
+(                               
+    (result)=>
+    {
+        console.log("connected to the Database")
+        console.log("server started successfully")
+        server.listen(PORT) 
+    }
+)
+.catch  
+(
+    (err)=>
+    {
+        console.log(err)
+    }
+)
+
+const server = express()
+const PORT=7777
+server.use(cors(corsOptions)); //server is used by cors and inside cors use corsoptions //here we make server to use corsoptions
+
+server.use(bodyparser.json())
+
+var homepage=(req,res)=>res.send("Welcome to my library") //handle http://localhost:7777
+
+//server.use("/user",userRouter) 
+server.use("/tutorial",tutorialRouter)
+authenticate(server)
+server.get("/",homepage)

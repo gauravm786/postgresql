@@ -507,9 +507,9 @@ const getUsersByAge=(req,res)=>
 }    
 */
 
-//16 may
+//16 may and 30 May
 
-/*
+
 import {User} from '../model/users.js'
 
 //in controllers we define functions
@@ -711,4 +711,3 @@ const getUsersByAge=(req,res)=>
         }
     )
 }    
-*/
